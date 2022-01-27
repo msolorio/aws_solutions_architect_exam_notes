@@ -1,0 +1,12 @@
+# AWS Certified Solutions Architect Associate (SAA-C02) Traning
+
+[https://www.udemy.com/course/aws-certified-solutions-architect-associate-hands-on/](
+https://www.udemy.com/course/aws-certified-solutions-architect-associate-hands-on/)
+
+## About the Instructor
+- Worked in IT for over 20 years
+- Worked as consultant in System Integrations space
+- [https://digitalcloud.training/neal-davis/](https://digitalcloud.training/neal-davis/)
+- On linked in - [linked.com/in/nealkdavis](linked.com/in/nealkdavis)
+- On slack - digitalcloud.training/slack
+
