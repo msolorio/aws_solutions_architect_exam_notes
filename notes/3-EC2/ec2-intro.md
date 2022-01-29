@@ -316,7 +316,7 @@ Clean Up
 - cannot send / receive traffic from internet
 
 #### Public Route Table
-A VPC's public route table has entries for
+A public route table has entries for
 - CIDR block of VPC
   - 127.31.0.0./20 - Local
 - catch all route for internet gateway
@@ -334,7 +334,7 @@ A private subnet route table has entries for
 
 ## Bastion Host
 
-Connecting to a private instance from the internet by using a public instance as a middle-layer
+A middle layer that allows us to connect from the internet to a private instance
 
 [see slide]
 
@@ -342,10 +342,146 @@ For example
 - SSH into the public instance
 - from within public instance SSH into private instance
 
+Agent Forwarding<br>
+[https://digitalcloud.training/ssh-into-ec2-in-private-subnet/](https://digitalcloud.training/ssh-into-ec2-in-private-subnet/)
+
 ---
 
 ## Exercise - Private Subnets and Bastion Hosts
 
+Create private subnet
+- name - private-default-1a
+- in AZ 1a
+- give it the proper CIDR block
+
+Create a route table
+- name - private-rt1
+- associate private subnet to private route table
+
+Launch public EC2 instance
+- give ssh
+
+Launch private EC2 instance
+- add to private subnet
+- ssh
+
+Store default keypair
+`ssh-add -K path/to/private/key.pem`
+
+Agent Forwarding
+- ssh into public instance while passing private key to the instance
+`ssh -A username@ip-address`
+
+- from within public instance
+- ssh into private instance
+- `ssh username@ip-address`
+
+- ping a site on the internet
+- not able to because private instance cannot communcate to outside world
+
+---
+
+## NAT Gateways and NAT Instances
+
+- Allow private instances to send outbound traffic to the internet
+- Allows private instance to
+  - download software installs, updates
+  - send a request outbound
+
+NAT Gateway
+- AWS managed service
+- **NAT gateway is deployed in public subnet**
+- has elastic public IP
+- private route table has catch-all route pointing to the NAT Gateway
+- scales automatically
+- automatic high availability within AZ
+- No security groups
+- cannot access via SSH
+
+NAT Instances
+- EC2 instance configured to be NAT instance
+- use AMI - `amzn-ami-vpc-nat`
+- **disable source/destination checks**
+  - allows instance to act as middle layer
+  - private route table has catch-all route pointing to NAT instance ID
+- Scales manually
+- no high availability
+- assigned Security groups
+- Can use as a bastion host
+
+---
+
+## Exercise - Private Subnet with NAT Gateway
+
+- Create private subnet
+- Create private route table
+- Create EC2 instance in public subnet
+- Create EC2 instance in private subnet
+- Deploy NAT gateway into public subnet
+  - Allocate Elastic IP to it
+- Update private route table to add catch-all route to NAT gateway
+
+Clean Up
+- delete NAT gateway (paid)
+- detach and release elastic IP
+- delete instances
+
+---
+
+## EC2 Instance Lifecycle
+
+### Stopping EC2 instance
+  - only available for EBS backed instances
+  - Data in RAM is lost
+  - no charge for stopped instances
+  - EBS volues attached are chargeable
+  - allow for moving an instance between hosts
+  - public dynamic IP are lost
+
+If instance is using instance store it cannot be moved to a "stopped" state
+
+### Hibernating EC2 instances
+- Allows for saving the state of an instance
+- only for on-demand and reserved Linux instances
+- contents of RAM saved to EBS volume
+- hibernation capability must be enabled when launched
+- upon starting back up
+  - EBS is restored
+  - RAM is reloaded
+  - processes resumed
+  - data volumes re-attached
+
+### Rebooting EC2 instances
+- equivalent to OS reboot
+- DNS name, all IP addresses retained
+- does not affect billing
+
+### Retiring EC2 instance
+- if underlying hardware has irreparable failure
+- instance reaches scheduled retirement date, stopped/terminated by AWS
+
+### Terminating an instance
+- cannot be recovered a terminated instance
+- by default root EBS volumes are deleted
+
+### Recovering EC2 instance
+- CloudWatch can be used to monitor system status checks and recover instance if needed
+- If instance is impaired due to hardware issues
+
+---
+
+## Nitro Instances and Nitro Enclaves
+
 
 
 ---
+
+
+
+
+
+
+
+
+
+
