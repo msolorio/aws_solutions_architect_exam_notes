@@ -1,5 +1,13 @@
 # EC2 - Elastic Compute Cloud
 
+## EC2 Cheat Sheet
+[https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/amazon-ec2/](https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/amazon-ec2/)
+
+## VPC Cheat Sheet
+[https://digitalcloud.training/certification-training/aws-solutions-architect-associate/networking-and-content-delivery/amazon-vpc/](https://digitalcloud.training/certification-training/aws-solutions-architect-associate/networking-and-content-delivery/amazon-vpc/)
+
+---
+
 A virtual server in the cloud on AWS
 
 - AWS has a pool of physical hardware
@@ -472,16 +480,181 @@ If instance is using instance store it cannot be moved to a "stopped" state
 
 ## Nitro Instances and Nitro Enclaves
 
+#### Nitro Instances
+- next generation of EC2 instance hardware
+- improved performance and security
+- breaks hardware into specialized functions
+  - vpc
+  - ebs
+  - instance storage
+  - [see slides for more]
 
+#### Nitro Enclaves
+- provide highly secure infrastructure to run code
+- uses **cryptographic attestation** to ensure only authorized code is running
+- Good for securing highly sensitive data
+  - PII
+  - healthcare data
+  - financial data
+
+Instance types<br>
+[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
 
 ---
 
+## EC2 Pricing Options
+
+#### On-Demand
+- no commitment
+- no discount
+- best for short term or unpredictable workloads
+  - dev/test
 
 
+#### Reserved
+- 1 or 3 year commitment
+- Up to 75% discount
+- best for steady, predictable workloads
 
+#### Spot Instance
+- Bid for unused capacity on AWS
+- up to 90% discount
+- can be terminated at any time
+- best for workloads with flexible start and end times
 
+#### Dedicated Instance
+- runs in a VPC or hardware that is dedicated to a single customer
+- not on its own server entirely
+- pay per instance
 
+#### Dedicated Host
+- a physical server dedicated for your use
+- best for
+  - need to accomodate existing server-bound licenses
+  - address corporate / regulartory complience
 
+#### Savings Plan
+- commitment to consistent amount of usage
+- pay by hour
+- 1 or 3 year commitment
 
+---
 
+## EC2 Billing
 
+#### billed per second
+- Amazon Linux and Ubuntu instances
+- on-demand instances
+- reserved instances
+- spot instances
+- EBS volumes
+
+#### billed per hour
+- Red Hat EL instances
+- SUSE ES instances
+- Windows instances
+
+---
+
+## Reserved Instances (RI)
+
+Can pay for 1 or 3 years
+  - all upfront
+  - partial upfront
+  - no upfront
+
+RI are purchased for a specific AZ and a region
+
+Specify the Tenancy
+- dedicated - running on dedicated hardware
+- default - running on shared hardware
+
+When the attributes of your used instance match the attributes of a Reserved Instance (RI) the discount is applied.
+
+##### Standard RI
+  - allows you to change
+    - AZ
+    - instance size (linux)
+    - networking type
+
+##### Convertable RI
+  - allows you to change
+    - all features from standard RI
+    - instance family
+    - OS
+    - tenancy
+    - *payment option*
+
+---
+
+## Scheduled RI
+
+- **AWS no longer has Scheduled RIs available**
+- reserving capacity based on recurring schedule
+- minimum of 1200 hours/year
+- example
+  - reporting app that runs
+    - 6 hours/day
+    - 4 days/week
+
+---
+
+## Savings Plan
+
+Compute Savings Plan
+- 1 or 3 year commitment
+- hourly commitment to useage of Fargate, Lambda, and EC2
+- Any region, family, size, tenancy, OS
+
+EC2 Savings Plan
+- 1 or 3 year commitment
+- hourly commitment to useage of EC2 within selected region and instance family
+- Any size, tenancy, and OS
+
+---
+
+## Spot Instances
+
+- Bid for unused capacity at up to 90% discount
+
+- AWS gives you 2 minute warning if they need to reclaim capacity
+  - available via
+    - metadata
+    - CloudWatch Events
+
+#### spot instances
+- one or more EC2 instances
+
+#### Spot Fleet
+- launches and maintains a number of spot and on-demand instances to meet specified target capacity
+
+#### EC2 Fleet
+- launches and maintains a number of spot, on-demand, and reserved instances to meet specified target capacity
+
+---
+
+## Spot Block
+
+- reserve 1 - 6 hours of uninterrupted time
+- 30% - 45% discount
+- specify
+  - block duration
+  - instance count
+  - bid price
+
+---
+
+## Dedicated Instances and Dedicated Hosts
+
+Both
+  - enable use of dedicated physical servers
+
+Dedicated host
+  - visibility of sockets, cores, host ID
+  - targeted instance placement
+  - can add capacity using an allocation request
+  - per host billing / not billed by instance
+
+[See slide]
+
+---
