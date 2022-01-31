@@ -220,6 +220,284 @@ NLB
 - NLBs nodes can have elastic IPs for each subnet
 - [see slides]
 
+---
 
+## Exercise - Create Target Groups
+
+Creating 2 target groups - one for ALB and NLB each
+
+- Create target group for ALB
+  - select HTTP
+  - set healthy threshold - 2
+    - number of consequitive successful health checks before instance considered healthy
+  - don't add any instances
+
+- Create target group for NLB
+  - protocol TCP (routes traffic based on TCP)
+  - keep port at 80 (NLB sends traffic to HTTP server on instance)
+  - don't add any instances
+
+---
+
+## Network Load Balancer
+
+Allocate 3 Elastic IPs
+
+Create Network Load balancer
+  - choose same availability zones as ASG
+    - will place a load balancer node in each subnet
+    - assign an elastic IP for each subnet node
+  - add listener for TCP forwarding to TG-NLB
+
+Explore load balancer console and actions
+  - features:
+    - can allocate an s3 bucket to store logs
+    - an enable cross zone load balancing
+
+Add target group (TG-NLB) to ASG
+- Edit ASG
+- choose Load balancers
+- select TG
+
+See what IP addresses are associated with Load Balancer
+- in terminal run `nslookup`
+- paste in DNS name of NLB
+- Can see
+  - IP for load balancer
+  - 3 Elastic IP addresses associated with load balancer nodes
+
+paste NLB DNS name into browser
+
+paste in elastic IPs into browser
+
+
+Clean up
+- delete load balancer
+- delete TG-NLB
+- release elastic IPs
+
+---
+
+## Exercise - Application Load Balancer
+
+- Remove TG-NLB and add TG-ALB to Auto Scaling Group
+
+- Create Application Load Balancer
+  - Set HTTP as protocol
+  - Add TG-ALB target group
+  - set subnets
+    - IP addressed will be assigned by AWS
+
+- Visit DNS name for ALB
+
+---
+
+## Exercise - ALB - Query String Routing
+
+- Launch instance
+  - Attach to subnet that is included in TG-ALB
+  - Security group
+    - HTTP, SSH
+  - Label 'Query Test'
+
+- Create new target group
+  - name - TG-ALB-2
+  - protocol - HTTP
+  - Add Query Test instance
+
+in ALB
+
+Add query string rule A to existing listener
+  - key: `AppGroup`, value: `A`
+  - forward to TG-ALB
+
+Add query string rule B to existing listener
+  - key: `AppGroup`, value: `B`
+  - forward to TG-ALB-2
+
+Clean Up
+- Terminate Query String instance
+
+---
+
+## EC2 Scaling Policies
+
+#### Target Tracking Scaling Policy
+- dynamic scaling policy
+- ASG scales to try to meet a target metric
+  - for example keep ASGAvergaeCPUUtilization = 60%
+
+#### Simple Scaling
+- Set an alarm
+  - for example CPU >= 60%
+- when an alarm triggered ASG launch or terminate instances
+
+
+#### Step Scaling
+- set an alarm
+  - for example CPU >= 60%
+- trigger launch or terminating instances depending on how large the alarm breach is
+  - for example
+    - if CPU > 60% launch some instances
+    - if CPU > 90% launch more instances
+
+#### Schedule Scaling
+- Define a time for scaling ASG
+
+#### Predictive Scaling
+- AWS uses traffic history to predict how and when to scale elasticly
+
+---
+
+## Exercise - Elasticly Scale Application
+
+Create scaling policy for ASG
+- target tracking
+- average CPU utilization
+- target 60%
+
+#### SSH into both instances and generate load
+
+Enable the EPEL repo:
+- `sudo amazon-linux-extras install epel -y`
+
+Install the stress utility
+- `sudo yum install stress -y`
+
+Generate load on instance
+`stress -c 6`
+
+---
+
+## Cross-Zone Load Balancing
+
+If enabled
+- Balances load so that each target instance gets equal amount of traffic
+
+If disabled
+- balances load evenly accross load balancer nodes (one node per subnet)
+
+[see diagram]
+
+- always enabled for ALBs
+- disabled by default with NLBs and GLBs
+
+---
+
+## Session State and Session Stickiness
+
+Occasionally session state needs to be stored in the application
+
+#### Storing session data
+- session data such as if a user is logged in needs to be stored
+- can be stored in
+  - dynamoDB
+  - ElastiCache
+
+#### Sticky Sessions
+When user visits application
+- load balancer assigns cookie to client
+- cookie used to associate client with an instance
+- allows session data to be stored on the instance
+- if instance goes offline, client is assigned another instance
+
+---
+
+## Exercise - Enable Sticky Sessions
+
+- visit DNS name for ALB in browser
+  - observe browser cycling through instances
+
+Edit target group
+- enable stickiness
+- leave with load balancer generated cookie
+
+Load Balancer Generated Cookie
+- cookie name is `aws-alb`
+
+application-based cookie
+- allows you to name to cookie what you want
+- could be beneficial if you have multiple layers of load balancing in architecture
+
+visit DNS name for ALB in browser
+- notice we are stuck to one instance
+
+Clean Up
+- Disable sticky sessions
+
+---
+
+## Secure Listener for ELB
+
+Load Balancers can handle SSL/TLS encryption of traffic to application
+
+Can Create a SSL/TLS certificate with AMC
+
+SSL/TLS certificate can be attached to load balancer
+- Traffic can be encrypted
+  - from client to load balancer
+  - and then from load balancer to instance
+
+SSL/TLS certificate can be attached to instances while using NLB
+- Traffic can be encrypted
+  - from client to instance
+  - load balancer doesn't decrypt and re-encrypt
+
+---
+
+## Exercise - Create a Secure Listener
+
+Prerequisite
+- have domain name registered with Route 53
+- have ALB created routing traffic to target group
+- have ASG with target group registered
+
+Navigate to Certificate Manager Console
+- Request certificate
+- add purchased domain
+- use DNS validation
+
+Navigate to Load Balancer Console
+- Select ALB
+- Add listener
+  - HTTPS on port 443
+  - forward traffic to target group
+  - select created certificate
+
+Add DNS record for ALB
+- In Route 53 select hosted zone
+- add record
+  - zone apex (no subdomain)
+  - alias for ALB
+
+For security group
+- Add rule for HTTPS
+
+in browser visit
+https://your-domain.com
+
+Clean Up
+- Delete A record pointing to ALB for hosted zone
+
+---
+
+## Clean Up
+
+Delete
+- ASG
+  - should terminate instances
+- ALB (paid)
+- Release IP address (paid)
+- Target Groups
+
+---
+
+## Review Slides and Cheat Sheets
+
+ELB Cheat Sheet<br>
+[https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/elastic-load-balancing/](https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/elastic-load-balancing/)
+
+ASG Cheat Sheet<br>
+[https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/aws-auto-scaling/](https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/aws-auto-scaling/)
 
 ---
