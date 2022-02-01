@@ -1,4 +1,4 @@
-# AWS Certified Solutions Architect Associate (SAA-C02) Traning
+# AWS Certified Solutions Architect Associate (SAA-C02) Training
 
 [https://www.udemy.com/course/aws-certified-solutions-architect-associate-hands-on/](
 https://www.udemy.com/course/aws-certified-solutions-architect-associate-hands-on/)
