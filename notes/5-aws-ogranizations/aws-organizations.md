@@ -1,0 +1,147 @@
+# AWS Organizations
+
+Consolidate many AWS accounts into one organization
+
+- one account to manage them all
+- consolidated billing
+- can be used to create AWS accounts
+
+Available in 2 feature sets
+
+#### consolidated billing
+  - can aggregate usage of service accross accounts and get discounts
+
+paying account
+  - account that pays the bill
+  - independent cannot access resources of other accounts
+
+linked accounts
+  - members within the organization
+  - independent
+
+#### all features
+  - allows for service control policies
+
+Root accounts
+  - the accounts used to create organization
+  - can connect in other accounts
+
+#### organization units
+- a way to group accounts
+
+#### Service control policies
+- can control the available API actions
+- is attached to an organizational unit
+
+---
+
+## Exercise - Create Organization and Add Accounts
+
+In AWS Organization Console
+- Create an organization
+- current logged in user becomes the management account
+  - becomes the paying account for the organization
+- check email varification for organization
+
+Add AWS account
+  - give name - production-account
+  - give email address - cannot be same as used for root account
+  - give IAM role name
+    - `OrganizationAccountAccessRole`
+
+Create organizational unit
+- click root > actions > organization unit > create new
+- call production
+
+move production-account into production organizational unit
+
+---
+## Service Control Policies (SCP)
+
+Can control maximum available permissions available in an account
+
+SCPs do not grant permissions. Account must still have permission assigned to them by IAM
+
+Root account / management account has SCP attached to it that allows any action on any resource
+
+```json
+{
+  "Effect": "Allow",
+  "Action": "*",
+  "Resource": "*"
+}
+```
+
+#### Tag Policy
+- enforces tag standardization in organization
+
+---
+
+## Exercise - Create Service Control Policy
+
+Switch from management account to production-account
+
+From organization console
+- copy production account number
+- paste into 'Switch Roles.txt' file
+- update display name
+
+- from top right dropdown > switch roles
+
+Onced logged in
+- navigate to IAM
+- create role
+- add permissions
+  - AmazonS3ReadOnlyAccess
+  - AmazonDynamoDBFullAccess
+- call DenyRoleModificationTest
+
+Once created
+- copy role ARN
+- paste in DenyAccessToASpecificRole.json file under resource entry
+  - will deny access to listed actions for the specified resource (the role we just created)
+
+Switch back to management account
+- in organization console
+- go to policies
+- enable service control policies
+
+AWS organization uses a deny list strategy
+- The FullAWSAccess SCP is defined at the top level and flows down the hierarchy
+- you must add deny list SPCs where needed in hierarchy
+
+in Service Control policies
+- create a policy
+  - paste in code from DenyAccessToASpecificRole.json file
+  - give name
+  - create policy
+
+Attach to production organizational unit
+- select production OU > policies > attach
+- attach deny policy
+
+Those permission will now be restricted to any accounts in OU
+
+Switch to production account
+- try to attach a policy
+  - AmazonRDSFullAccess
+- notice we are denied
+- try to remove one of the attached policies
+- notice we are denied
+
+Try creating another role 
+- able to create a new role
+
+production-account cannot modify permissions for `DenyRoleModificationTest`
+
+Switch back to management account
+- in organization console
+  - detach role
+  - role will no longer be applied
+
+---
+
+## AWS Organizations Cheat Sheet
+[https://digitalcloud.training/certification-training/aws-solutions-architect-associate/management-tools/aws-organizations/](https://digitalcloud.training/certification-training/aws-solutions-architect-associate/management-tools/aws-organizations/)
+
+---
