@@ -233,6 +233,7 @@ What we'll build
 VPC with
 - 10.0.0.0 CIDR block 
 - /16 bit subnet mask
+- /24 bit subnet masks for subnets
 - 2 private subnets
 - 2 public subnets
 - Main route table
@@ -274,5 +275,386 @@ Create Internet gateway
 After IG created
 - attach to VPC
 - Add route to IG in main route table
+
+Create NAT gateway
+- place in public subnet
+- connectivity - public
+- allocate elastic IP
+
+Add entry to NAT gateway in private route table
+
+Clean Up
+- leave as is
+- next exercise will build on top
+
+---
+
+## Exercise - Launch Instances and Test VPC
+
+Launch Instances from the command line
+
+Add a security group
+- name publicWeb
+- connect to custom VPC
+- outbound traffic - all traffic / any destination
+- inbound - all traffic / any destination
+
+in `aws-cli-runinstances.md` file replace
+- AMI - get ami for Amazon Linux 2
+- instance type - t2.micro
+- security group id (one we just created)
+- subnet id for public a
+- key-name - name of your key pair
+- path to user data file - `file://user-data-subnet-id.txt`
+
+run `aws configure` - paste in access key id and secret access key
+
+run command in terminal from `aws-cli-runinstances.md` file
+
+check instance launching in EC2 console
+- label public-a
+
+Run same command for
+  - public subnet B
+  - private subnet A
+  - private subnet B
+
+Visit IP for public A in browser
+
+Connect between instances
+- SSH into public a
+- ping private IP of public b 
+- ping private IP of private b
+- curl private IP of private b
+  - `curl -s <private-IP>`
+  - returns HTML webpage for private b
+
+---
+
+## Security Groups and Network ACLs
+
+2 different types of firewalls
+- security group
+- Network ACL
+
+#### Network Access Control List - Network ACL
+- applied at subnet level
+- all traffic that passes through a subnet passes through **Network ACL**
+- can have explicit deny rules
+- stateless
+
+#### Security Group
+- applied at the instance level
+  - at the network interface level of the EC2 instance
+- security groups can be applied to instances in different subnets
+- can only have explicit allow rules
+- stateful
+
+---
+
+## rule table
+each filewall is going to have a rule table that will specify inbound and outbound traffic
+
+#### stateful firewall
+- security group
+- allows return traffic automatically
+  - for a single request/response cycle
+- knows that the return traffic is part of the same connection
+- do not need to explicitly define rule allowing return traffic
+
+#### stateless protocol
+- Network ACL
+- requires allow rules for both request and response
+  - treats send and return traffic independently even if they are part of the same connection (the same request/response cycle)
+
+---
+
+## Security Group rules
+Inbound rules
+- specify allowed inbound connections initiated by other computers
+
+Outbound rules
+- specify allowed outbound connections initialited by the instance itself 
+
+Source
+- can be
+  - IP address
+  - IP address range
+  - security group id
+
+Support allow rules only
+
+implicint deny rule at the end of the ruleset
+  - denies traffic by default
+
+---
+
+## Network ACL Rules
+
+Can have an explicit deny in rule table
+
+When traffic enters Network ACL
+- rules are checked one by one in order by number
+- rule checking stops once the traffic matches a rule
+  - traffic is either allowed or denied
+  - the other rules are not evaluated
+
+---
+
+### Exercise - Configure Security Groups
+
+Test various configurations of security groups
+
+Create security group
+- name - privateApp
+- attach to custom VPC
+- delete outbound rules
+- inbound rules
+  - HTTP from publicWeb security group
+  - only allows connections from custom public security group created earlier
+
+private instances
+- unassign publicWeb security group
+- assign privateApp security group
+
+edit publicWeb custom security group for public instances
+- update inbound rule to
+  - add SSH traffic from anywhere
+  - HTTP from anywhere
+
+in browser connect to public instance
+
+SSH into public instance
+
+curl IP for private instance
+
+---
+
+### Exercise - Configure Network ACL
+
+Explore existing network ACLs for custom VPC
+
+Explore existing inbound and outbound rules
+
+Add rule
+- rule Number - 101
+- HTTP from my IP
+  - for example
+  - 172.10.xxx.xxx/32 (/32 for exact match)
+- Deny
+
+Attemp to access the instance
+- rule does not work because we are allowing all traffic first
+
+Change custom rule to rule number 99
+
+Test in browser
+- We are denied
+
+Remove deny rule
+
+Clean Up
+- delete
+  - NAT Gateway
+  - elastic IP
+
+only need one public and one private instance for leter lessons
+- delete the others with the CLI
+
+---
+
+## VPC Peering
+
+Allows routing internally between 2 VPCs
+- Can connect VPCs in different regions or in accounts altogether
+- connection is not going out to internet
+- connections are encrypted
+
+Implementation
+- routing is enabled with private IP addresses
+- CIDR blicks cannot overlap for peering VPCs
+- Does not support transitive routing
+  - cannot pass through intermediate VPC to connect to a 3rd
+  - VPCs must be connected directly
+
+---
+
+## Exercise - Configure VPC Peering
+
+Create VPC peering connection between VPCs in different accounts
+
+Overview
+- Create VPCs in each account
+- in security groups allow ICMP traffic from opposite VPC
+- in route table for each VPC
+  - add route for outbound traffic to opposite VPC
+
+Create Prod VPC
+- change to production-account
+- create VPC
+  - use values from `custom-vpc-prod.md` file
+  - subnets
+  - private route table
+  - internet Gateway
+- Save owner id and VPC id for VPC
+
+Switch back to management account
+- create peering connection
+- select local VPC
+- for VPC to peer with select
+  - another account
+  - account / owner id for other VPC-PROD
+- VPC ID
+  - add VPC id for other VPC-PROD
+
+Switch back to production account
+- accept peering connection request
+- create security group
+  - called VPCPEER-PROD
+  - inbound rules
+    - ICMP from CIDR block of VPC-MGMT (VPC from management account)
+    - SSH from CIDR block of VPC-MGMT
+  - outbound - all traffic
+
+- Launch instance
+  - select VPC
+  - public subnet
+  - add security group
+    - named VPCPEER-PROD
+  - create keypair if we don't have one
+
+Switch to management account
+- create security group
+  - named VPCPEER-MGMT
+  - select customVPC
+  - inbound rules
+    - ICMP from CIDR block of VPC-PROD
+    - SSH from CIDR block of VPC-PROD
+- add VPCPEER-MGMT security group to public a instance
+  - leave publicWeb security group attached
+
+- in Main route table add route
+  - destination: CIDR block for VPC-PROD
+  - target: peering connection
+
+Switch to production-account
+- in Main route table add route
+  - destination: CIDR block for VPC-MGMT
+  - target: peering connection
+
+Test
+- SSH into public a in management account
+- ping private instance from production account
+- SSH into private instance from production account
+  - wont actually be able to connect because we need the key pair
+
+Clean up
+- in management account
+  - terminate private instance
+- in production account
+  - terminate private instance
+
+---
+
+## VPC Endpoints
+
+Allow us to connect privately to public services like S3
+
+Connect direclty rather than via the internet
+
+---
+
+### VPC Interface Endpoint
+- uses an elastic network interface (ENI)
+- private IP attached to ENI
+- the ENI can connect to many AWS services
+- Many services can be directed to with Interface Endpoint
+
+### VPC Gateway Endpoint
+- uses a route table to point traffic to the S3 Gateway endpoint
+- IAM policies can be applied to endpoint
+- restricted to use with S3 and Dynamo DB
+
+---
+
+## Service Provider Model
+
+- A consumer in one VPC can consume a service being provided in another VPC.
+- Connection is made over a private channel rather than via the internet
+
+---
+
+## Exercise - Create VPC Endpoint
+
+#### What we will build
+- Creating a Gateway Endpoint to connect to an S3 bucket
+- add policy to S3 Gateway Endpoint
+- add bucket policy to S3 bucket
+- Entry in route table pointing to S3 bucket
+
+#### Steps
+In endpoints console
+- create endpoint
+- search for s3
+- choose Gateway
+- Choose custom VPC
+- choose main route table of custom VPC
+
+Route tables
+- inspect main route table for custom VPC
+- see route to S3
+
+Create role to allow EC2 instance to perform S3 actions
+- in IAM console
+- create role
+- EC2
+- search permissions - `AmazonS3FullAccess`
+- name role - AmazonS3FullAccess
+
+Add role to instance
+
+in s3 console
+- create bucket
+- add images to bucket
+
+SSH into instance
+
+see buckets
+- `aws s3 ls`
+
+see contents
+- `aws s3 ls s3://bucket-name`
+
+Test to see if we can stop connection to S3
+- in Endpoint console
+- update policy for endpoint
+- change from Allow to Deny
+
+Try accessing S3 from EC2 instance again
+- notice we are denied access
+
+Change Deny back to Allow
+
+Set up Bucket Policy
+- Prevent all access except from VPC Gateway Endpoint
+
+in S3 console > in bucket > permissions > edit bucket policy
+
+update provided `Bucket-Policy-VPCE.json`
+- paste in bucket ARN
+- paste in VPC Endoint id in condition
+
+Paste in new policy and save
+
+SSH'ed in EC2 instance
+- try accessing buckets
+
+In terminal
+- `aws s3 ls s3://bucket-name`
+- cannot access bucket when not VPC Endpoint
+
+Remove the bucket
+- `aws s3 rb s3://bucket-name --force`
+- delete endpoint
 
 ---
