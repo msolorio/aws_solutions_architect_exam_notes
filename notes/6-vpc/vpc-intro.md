@@ -658,3 +658,235 @@ Remove the bucket
 - delete endpoint
 
 ---
+
+## AWS Client VPN
+
+Connect from client computer to AWS VPC via a private connection
+- connection is encrypted end to end
+- Can communicate with resources within a VPC using private IP addresses
+
+within VPC
+- **VPN endpoint** is connected to **elastic network interfaces** within subnets
+
+client
+- runs VPN software (not provided by AWS)
+- establishes connection to VPN endpoint
+  - using SSL/TLS (port 443)
+  - over the internet
+
+VPN endpoint performs **Network Address Translation**
+- converts CIDR block associated with VPN client to CIDR block for VPC
+- Client CIDR --> VPC CIDR
+
+VPN Client has route table that has an entry pointing to VPN Endpoint
+
+---
+
+## AWS Site-to-Site VPN
+
+Connect an onsite data center to an AWS VPC using a VPN
+
+- Install a Virtual Private Gateway to AWS VPC
+- install a customer gateway in the on-premise network
+- can then establish a private connection between the two
+
+---
+
+## AWS VPN CloudHub
+
+An architectural pattern
+
+Allows
+- for multiple on-premise data centers to connect to a single AWS VPC
+- allows multiple on-premise data centers to connect with each other
+
+Steps
+- install **virtual private gateway** to VPC
+- each on-premise data center has customer gateway
+- each on-premise data center has its own ASN identifying it
+
+[see slide]
+
+---
+
+## AWS Direct Connect
+
+VPNs still run over the internet
+- latency
+- bandwidth contraints
+
+Direct Connect provide a private dedicated connection to AWS data center
+
+**AWS Direct Connection Location**
+- data center with direct private connection to AWS data center
+
+On-premise network needs to have a physical direct connection to AWS direct connection location
+- often fiber optic high speed connection
+- 1Gbps or 10Gbps
+
+#### Private VIF
+- virtual interface
+- allows for connection to AWS resources in a VPC
+- 802.1Q VLAN
+- BGP session
+
+#### Public VIF
+  - allows for connection to AWS services in public space
+    - CloudFront
+    - S3
+    - Dynamo DB
+  - does not allow for connection to the internet 
+
+#### Benefits
+- private connectivity
+- consistent connection
+- can increase speed/latency, bandwidth/throughput
+
+Can get lower speeds from partners in AWS Partner Network
+- 50Mbps to 500Mbps
+
+100 Gbps is featured in select locations
+
+Direction Connections are NOT encrypted
+
+Can use **IPSec S2S VPN** connection over VIF to encrypt data
+
+---
+
+## Direct Connect Gateway
+
+Beneficial if your on-premise center needs to direct connect to multiple regions
+
+- on-premise corporate office can create private fibre connection to a DX location
+- DX Location then uses direct connect to connect to a DX Gateway
+- DX Gateway can then direct connect to any region within AWS
+
+---
+
+## AWS Transit Gateway
+
+Acts as a central hub for
+  - connecting from on-premise center to multiple VPCs
+  - connecting multiple VPCs together
+
+TGWs can be attached to
+- VPNs
+- Direct Connect Gateways
+- 3rd party appliances
+- TGWs in other regions
+
+[see slide]
+
+Transit Gateway can be combined with a DX gateway
+- DX Gateway connects directly to Transit gateway
+
+---
+
+## Using IPv6 in VPC
+
+IPv4 addresses represent 32 bits
+
+Using IPv4 you have ~4.3 billion addresses
+
+To accomodate shortage of IPv4 addresses
+- we use NAT
+- many computers can be represented by a single entry IP
+
+### IPv6
+
+uses hexidecimal to represent values
+
+xxxx.xxxx.xxxx.xxxx. xxxx.xxxx.xxxx.xxxx.
+
+- 8 separated values
+- each with 4 hexidecimal characters
+
+100 IPv6 addresses to every atom on earth
+
+### Set up VPC
+
+VPC has
+- IPv4 CIRD block
+- IPv6 CIRD block 
+  - AWS assings /56 subnet mask
+
+Subnets have /64 subnet mask
+
+Last 2 digits in hexidecimal represent the Host id
+- that is 256 available IP addresses
+
+In Route table
+- IPv6 CIDR block to route locally
+- catch all IPv6 CIDR block to route to internet
+
+all IPv6 addresses are publicly routable
+- no NAT with IPv6
+
+#### Egress-only Internet Gateway 
+- allows outbound traffic but not inbound traffic
+- allows for private instances
+
+---
+
+## VPC Flow Logs
+
+Flow Logs caputure information about the IP traffic going to and from VPC
+
+stored with s3 or cloudWatch
+
+Can be set up for
+- VPC
+- subnet
+- network interface
+
+## Exercise - VPC Flow Logs
+
+launch instance in public subnet
+- give user data
+- security group
+  - SSH, HTTP
+
+Create log Group
+- in cloudWatch console
+- create log group
+- retention settings
+  - 5 days (logs removed after 5 days)
+
+Create role for creating and updating logs
+- In IAM console
+- create role
+- name - flow-logs-cloudwatch
+
+- Add inline policy
+  - copy policy from `vpc-flow-logs.json`
+  - paste in policy
+
+- Edit trust relationship
+  - set principal service to - `vpc-flow-logs.amazonaws.com`
+
+Create Flow Log
+- in network interface console
+- flow logs > create flow log
+- all traffic
+- 1 minute aggregation interval
+- send to CloudWatch logs
+- set destination log group - log group we created
+- add IAM role we created
+
+Connect to instance
+
+for instance
+- temporary disable SSH inbound
+
+Attempt to connect via SSH and should fail
+
+In cloudWatch console
+- select log group
+- select eni from log stream
+- inspect logs with information
+  - view successful connections and unsuccessful connections
+
+clean up
+- terminate instance
+
+---
