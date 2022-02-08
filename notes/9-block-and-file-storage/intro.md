@@ -100,3 +100,64 @@ EBS volume must be in same AZ as EC2 instance
   - non-boot volumes are not deleted
 
 ---
+
+## EBS Copying, Sharing, and Encrypting
+
+#### Snapshot
+- a frozen in time copy of an EBS volume
+- snapshots are stored in S3 buckets
+  - they are stored in a region
+- can be used to copy EBS volume to another AZ
+- can be used to restore an EBS volume
+
+[Common Exam Question]
+- How to free up space
+  - Delete old snapshots
+  - keep most recent snapshot
+
+#### AMI
+Amazon Machine Image
+- Template for configuring an EBS volume
+- A snapshot can be used to create an AMI
+- AMI can be used to create a volume in another AZ
+
+---
+
+## Copying and Sharing AMIs and Snapshots
+
+[See Slide]
+[Common Exam Questions]
+[Practice these scenarios in console to memorize]
+
+---
+
+## EBS Snapshots and DLM
+
+### DLM - Data Lifecycle Manager
+- automates creation, retention, deletion of
+  - EBS snapshots
+  - EBS-backed AMIs
+
+Features
+- protects data by enforcing regular backups
+- creates AMIs that can be refreshed at regular intervals
+- retain backups for auditing and internal compliance
+- automatically deletes outdated backups, saving space
+- can create disaster recovery backup policies
+  - back up data to isolated accounts
+
+---
+
+## Instance Store
+- physically resides on same host machine as EC2 instance
+- very high performance / low latency
+- Instance store is **ephemeral**
+  - when the instance is powered down all data in instance store is lost
+- ideal for
+  - temporary storage of information that changes frequently
+  - buffers, caches, scratch data
+- Instance store volume root devices are created from AMI templates stored in S3
+- Cannot be detached/reattached
+
+---
+
