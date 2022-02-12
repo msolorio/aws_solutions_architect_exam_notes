@@ -411,3 +411,221 @@ Use Lambda Function with Step Functions
 - [See provided instructions in Step Functions]
 
 ---
+
+## EventBridge
+
+Serverless Event Bus
+- for building distributed event driven applications
+
+Steps
+- A change in an event source triggers an **event**
+- event is sent to an **Event Bus** om **Evemt Bridge**
+- In the event bus, the event triggers a rule
+- the rule sends a message to another Service
+
+[See slide]
+
+---
+
+## Exercise - Create an Event Bus and Rule
+
+What We'll Build
+- A termination on an EC2 instance triggers an event
+- event sent to Event Bus in EventBridge
+- event triggers a rule
+- rule says to trigger notification in SNS topic to send email
+
+Steps
+- Launch EC2 instance
+- copy instance ID
+
+In EventBridge
+- create a rule
+- name - EC2StateChange
+- choose event pattern
+  - pre-defined pattern
+  - service provider - AWS
+  - service name - EC2
+  - event type - EC2 instance state-change notification
+  - specific states - terminated
+  - add instance ID
+
+  - specify a target
+    - SNS
+    - topic - myEmailNotification from earlier in course
+  - create
+
+Test
+- terminate EC2 instance
+- check email
+
+---
+
+## API Gateway
+
+Used for creating REST / HTTP APIs or web socket APIs
+
+- Provides an endpoint for accessing API
+- API Gateway can then forward request to any number of services
+- Can integrate with SWagger / Open API definition
+
+---
+
+## API Gateway Deployment types
+
+Edge-optimized endpoint
+- leverages the CloudFront infrastructure
+- provides clients to the API reduced latency
+
+Regional Endpoint
+- API Gateway exists in a region
+  - reduced latency for requests originating in that region
+- Can configure a CDN
+- Can protect with WAF
+
+Private Endpoint
+- Provides a private secure connect to the API
+- Allow access to API only to services in the same VPC
+- can connect via VPN or via direct connect
+
+Structure of a REST API
+- [See Slide]
+- within API gateway
+  - Map request parameters to a format required by various AWS services
+  - can send to Lambda, EC2, etc...
+
+---
+
+## API Gateway Integrations
+
+Lambda Function
+- Lambda Proxy
+  - sends request straight through to Lambda
+
+- Lambda Custom Integration
+  - allows for custom
+
+HTTP Endpoint
+- HTTP Proxy
+  - sends request straight to HTTP endpoint
+
+- HTTP Custom Integration
+  - allows for custom
+
+---
+
+## API Gateway - Caching
+
+Can provision an API Gateway Cache
+- specify the size in GBs
+- can reduce number of calls to backend
+- improve latency of requests to API
+
+Steps
+- client makes request
+- API Gateway checks API cache first
+- if not found in API Cache
+  - request goes to **Production Stage**
+  - from there forwarded to service backend endpoint
+
+---
+
+## API Gateway - Throttling
+
+API Gateway has a limit on requests per second
+
+- steady-state request rate limit - 10,000 request / second
+- Maximum concurrent requests - 5,000 requests
+  - across all APIs in account
+
+Going over limit
+- API responds with
+  - `429 Too Many Requests` error
+
+After hitting rate limit
+- client can resubmit request at a rate limit
+- delay before sending next request
+- comply with API Gateway rate limit
+
+---
+
+## API Gateway - Usage Plans and API Keys
+
+Can set different usage plans for our API
+- each has a different rate limits
+- Can assign different users to different usage plans
+
+API Keys
+- Clients are then given an API key to access the API
+- used to distinguish their plan with the API
+
+Different usage plan users sent to different **Production Stage** and different set of backend endpoints
+
+---
+
+## Exercise - Simple REST API
+
+Create basic hello world API Gateway
+
+Create REST API
+- In API Gateway console
+- build REST API
+- use example API
+- endpoint type - regional
+
+Explore API Gateway interface
+- note routes and methods listed in dropdown style
+- Each route can be configured for
+  - integration
+  - the backend endpoint / service it is connected to
+- can
+  - create routes
+  - add methods
+
+Deploy API
+- Actions > deploy
+- deployment stage - new stage
+- name - prod
+
+Visit API
+- note the invoke URL
+- paste in browser
+- test /pets/1
+- test /pets/2
+
+Explore tabs in production stage console
+-settings
+  - can
+    - enable API cache
+    - enable encryption
+    - change throttling settings
+    - connect to WAF
+    - enable certificate
+
+- logs
+  - can enable CloudWatch
+- left hand side
+  - can
+    - enable usage plans / tiers
+    - configure API keys for clients
+
+Practice creating a Usage plan
+
+Clean Up
+Actions > Delete
+
+---
+
+## Web App with HTTP API
+
+### What we will Build
+- An API Gateway
+- API Gateway configured to listen on particular routes
+- Each route hooked to a Lambda function
+- Lambda functions perform actions on a DynamoDB table
+- Build a front end static website and store in S3
+
+### Steps
+[Provided instructions in API-Gateway folder]
+
+---
