@@ -196,6 +196,8 @@ A message queue service
 
 For building distributed and **decoupled** applications
 
+**Can scale other services based on the number of messages in the SQS queue**
+
 ### Simple Notifications Services
 configure a service to send a notification
 - can send email when CloudWatch alarm is triggered
@@ -627,5 +629,22 @@ Actions > Delete
 
 ### Steps
 [Provided instructions in API-Gateway folder]
+
+---
+
+## Cheat Sheets
+
+#### AWS Lambda
+[https://digitalcloud.training/aws-lambda/](https://digitalcloud.training/aws-lambda/)
+
+#### API Gateway
+[https://digitalcloud.training/amazon-api-gateway/](https://digitalcloud.training/amazon-api-gateway/)
+
+#### Application Integration Services
+- Many services in here
+- [https://digitalcloud.training/aws-application-integration-services/](https://digitalcloud.training/aws-application-integration-services/)
+
+#### CloudWatch
+[https://digitalcloud.training/amazon-cloudwatch/](https://digitalcloud.training/amazon-cloudwatch/)
 
 ---
