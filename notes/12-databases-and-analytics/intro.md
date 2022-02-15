@@ -975,3 +975,156 @@ Clean up
 - delete EC2 instances
 
 ---
+
+## OpenSearch Service - ElasticSearch
+
+OpenSearch is successor to ElasticSearch
+- concepts are the same for both
+
+Fully Managed service for
+- searching
+- visualizing
+- analyzing text and unstructed data
+
+_
+- integrates with IAM
+- supports queries with SQL
+- scales by adding and removing instances
+- backup with S3 snapshots
+- Encryption
+  - at rest
+  - in-transit
+
+---
+
+## OpenSearch - Deployment
+- Deployed to a VPC
+- deploy nodes and replicas across AZs
+- available in up to 3 AZs
+- deploy a cluster
+  - clusters are known as OpenSearch domains
+- you specify
+  - number of instances
+  - instance types
+- storage options
+  - UltraWarm
+  - cold storage
+
+---
+
+## Ingesting Data into OpenSearch
+
+Data can come from various sourses
+- Kinesis firehose
+- OpenSearch API
+
+Kibana Dashboard can be pointed to OpenSearch domain to
+- search
+- visualize
+- analyze data
+
+---
+
+### OpenSearch in a VPC
+
+Cluster / domain deployed in VPC
+- for communication within VPC
+- VPN or proxy required to connect from internet
+
+Limitations of VPC deployments
+- cannot switch from VPC to public endpoint
+- cannot launch to VPC with dedated tenancy
+- cannot be moved to another VPC
+  - can change subnets and security groups
+
+Cannot use IP-based access policies
+
+Can deploy cluster / domain to a public endpoint
+- accessed by internet
+
+---
+
+## OpenSearch - ELK Stack
+
+Elasticsearch / OpenSearch, Logstash, and Kibana
+- popular combination of technologies
+
+Logstash
+- aggregating logs from systems / applications
+
+OpenSearch
+- storing data
+- searching data
+- analyzing
+- visualing
+
+Kibana
+- analyzing, visualing data
+
+#### Use cases
+- visualizing application, infrastructure and monitoring
+- troubleshooting
+- security analytics
+
+---
+
+## OpenSearch - Access Control
+
+Authentication options
+- federation using SAML to on-premise directories
+  - SAML - Security Assertion Markup Language
+- Amazon Cognito and social identity providers
+
+---
+
+## OpenSearch - Best Practices
+[Common exam questions]
+
+AZs
+- Deploy OpenSearch acrross 3 AZs
+- if 3 not available in your region
+  - deploy to 2
+- keep same number of instances in each AZ
+
+_
+- use 3 dedicated master nodes
+- have at least 1 replica per index
+
+Access
+- apply restrictive resource-based policies to domain
+- Create domain within a VPC
+- for sensitive data
+  - use encryption in-transit and at-rest
+
+---
+
+## Cheat Sheets
+
+#### RDS
+[https://digitalcloud.training/amazon-rds/](https://digitalcloud.training/amazon-rds/)
+
+#### Aurora
+[https://digitalcloud.training/amazon-aurora/](https://digitalcloud.training/amazon-aurora/)
+
+#### DynamoDb
+[https://digitalcloud.training/amazon-dynamodb/](https://digitalcloud.training/amazon-dynamodb/)
+
+#### ElastiCache
+[https://digitalcloud.training/amazon-elasticache/](https://digitalcloud.training/amazon-elasticache/)
+
+#### RedShift
+[https://digitalcloud.training/amazon-redshift/](https://digitalcloud.training/amazon-redshift/)
+
+#### EMR - Elastic MapReduce
+[https://digitalcloud.training/amazon-emr/](https://digitalcloud.training/amazon-emr/)
+
+#### Kinesis
+[https://digitalcloud.training/amazon-kinesis/](https://digitalcloud.training/amazon-kinesis/)
+
+#### Athena
+[https://digitalcloud.training/amazon-athena/](https://digitalcloud.training/amazon-athena/)
+
+#### AWS Glue
+[https://digitalcloud.training/aws-glue/](https://digitalcloud.training/aws-glue/)
+
+---
