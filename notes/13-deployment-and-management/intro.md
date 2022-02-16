@@ -106,3 +106,30 @@ After creation
 - delete stack
 
 ---
+
+## Exercise - Complex CloudFormation
+
+Use template to create multi-AZ Auto Scaling Group with an ALB
+
+Inspect the provided AutoScalingALBTemplate.json file
+- many parameters specified for the stack
+- note the specified resources
+- setting an index.html file with contents
+- creates ALB, ASG, instance, security groups
+
+Create stack
+- use this URL to deploy template
+  - has the most recent code
+  - https://s3.amazonaws.com/cloudformation-templates-us-east-1/AutoScalingMultiAZWithNotifications.template
+
+After creation
+- May need to update security group of EC2 instance
+- add HTTP inbound
+
+---
+
+## Elastic Beanstalk
+
+
+
+---
