@@ -276,6 +276,62 @@ Explore options for creating a Private CA
 
 ## Web Application Firewall
 
+- Can create rules to filter web traffic
+- filter by
+  - IP address
+  - HTTP headers
+  - request body
+  - custom URI
 
+[Common exam question]
+Can bock common web exploits
+- SQL Injection
+- Cross Site Scripting
+
+WAF can be placed in front of
+- Load Balancer
+- CloudFront
+- API Gateway
+- AWS AppSync
+
+#### Web ACLs - Access Control Lists
+- protect a set of resources
+- ACL contains rules
+
+#### ACL Rule
+- each rule
+  - defines the inspection criteria
+  - defines action to take if criteria is met
+
+#### Rule Groups
+- rules can be stored and applied in a rule group
+
+#### IP Sets
+A set of IP addresses and IP ranges to be used in a Rule statement
+
+#### Regex Pattern Set
+A collection of regular expressions to use in a rule statement
+
+#### Rule Action
+- determintes what WAF will do when it matches a rule criteria
+- Can Count
+  - will count the request in a tally
+- Can Allow
+  - forwards request to application
+- Can Block
+  - the request
+  - AWS resource responds with 403 - Forbidden status code
+
+#### Match Statement
+- Compare the request or its origin against a condition
+- can match for
+  - geographic match
+  - IP set
+  - regex pattern set
+  - size constraints [look more into]
+  - SQLi Attack - check for malicious SQL code in components of the request
+  - String match a component of the request
+  - XSS attck - inspect for cross-site scripting attack in components of the request
 
 ---
+
