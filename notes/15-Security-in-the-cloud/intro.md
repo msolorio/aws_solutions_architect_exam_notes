@@ -335,3 +335,39 @@ A collection of regular expressions to use in a rule statement
 
 ---
 
+## AWS Shield
+
+A managed service for protecting against DDoS attacks
+
+also helps to minimize
+- downtime
+- latency
+
+#### DDoS Attack
+- Distributed Denial of Service Attacks
+- an attempt to bring down a server by overloading it with requests
+- sending malformed data
+- using automated bots to send requests
+
+#### Service Tiers
+Standard
+- no cost
+- included with CloudFront by default
+
+Advanced
+- $3k per month
+- 1 year commitment
+- comes with additional features
+
+---
+
+## Exercise - AWS Shield
+
+in WAF console
+- select AWS Shield
+- getting started
+- **do not subscribe!**
+  - very expensive
+- Inspect features available with advanced
+
+---
