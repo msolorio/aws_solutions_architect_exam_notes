@@ -274,7 +274,7 @@ Explore options for creating a Private CA
 
 ---
 
-## Web Application Firewall
+## AWS WAF - Web Application Firewall
 
 - Can create rules to filter web traffic
 - filter by
@@ -371,3 +371,162 @@ in WAF console
 - Inspect features available with advanced
 
 ---
+
+## Amazon Inspector
+
+Run assessments on an EC2 instance
+- checks for security exposures
+- volnerabilities
+
+Can configure to run on a schedule
+
+- price based on number of instance assessments
+
+#### Network Assessments
+- Does not require agent to be installed on EC2
+  - checks which ports on EC2 are available from outside VPC
+
+- if Agent is installed
+  - can check which processes are reachable on each port
+
+
+#### Host Assessments
+- Requires agent to be installed
+- assessments
+  - Vulnerable software (CVE)
+  - host hardening (CIS)
+  - security best practices
+
+---
+
+## Amazon Macie
+
+Fully managed data security and data privacy service
+
+- uses machine learning to discover and help you protect sensitive data **on S3**
+
+- used for
+  - security compliance
+  - preventive security
+
+identifies
+  - PII
+  - Protective Health Information (PHI)
+  - API keys
+  - secret keys
+  - regulatory documents
+
+identifies
+- changes to policy and ACLs
+
+monitor security settings of S3
+
+Can send logs to message to
+- EventBridge
+- CloudWatch Events
+
+Can manage multiple accounts
+
+---
+
+## GaurdDuty
+
+Intelligent treat detection service
+
+- detects
+  - account compromise
+  - instance compromise
+  - S3 compromise
+  - milicious reconnaissance
+    - attacker attempting to gain information
+
+Monitors events across
+- CloudTrail
+  - Management events
+  - S3 data events
+- VPC flow logs
+- DNS logs
+
+---
+
+## Defense In-Depth
+
+Implementing Security at multiple layers within applicaiton
+
+[See Slide]
+
+#### Add SSL/TLS connections between
+- clients and CloudFront
+- CloudFront and Load Balancer
+- done by
+  - add SSL certificate to
+    - CloudFront
+    - Load Balancer
+  - with Certificate Manager
+
+#### WAF
+- Add WAF - Web Applicaiton Firewall to CloudFront distribution
+- protect against common Attacks
+  - SQL injection
+  - Cross Site Scripting
+- Allow for fine grained blocking of traffic
+
+#### AWS Shield
+- Add Shield to CloudFront distribution
+- Protect against DDoS attacks
+
+#### Security Groups
+- Add SG to the Load balancer
+- Add SG to EC2 instances
+- Lock down flow of traffic to
+  - CloudFront --> ALB --> EC2
+
+#### Network ACLs
+- Attached to subnets
+
+#### Logging
+- Access logs for ALB and CloudFront
+  - stored in S3
+
+#### AWS Config
+- Ensure S3 is encrypted
+- Ensure ALB conforms to standards
+
+#### Amazon Inspector
+- monitor EC2 instances
+
+#### KMS
+Generate KMS keys to encrypt EBS volumes for EC2 instances
+
+#### SNS Notifications
+- Create SNS topic to trigger when alarm triggered to
+  - Inspector
+  - AWS Config
+  - WAF
+  - Shield
+
+---
+
+## Cheat Sheets
+
+#### IAM
+[https://digitalcloud.training/aws-iam/](https://digitalcloud.training/aws-iam/)
+
+#### Cognito
+[https://digitalcloud.training/amazon-cognito/](https://digitalcloud.training/amazon-cognito/)
+
+#### Directory Services
+[https://digitalcloud.training/aws-directory-services/](https://digitalcloud.training/aws-directory-services/)
+
+#### KMS
+[https://digitalcloud.training/aws-kms/](https://digitalcloud.training/aws-kms/)
+
+
+#### CloudHSM
+[https://digitalcloud.training/aws-cloudhsm/](https://digitalcloud.training/aws-cloudhsm/)
+
+#### WAF and Shield
+[https://digitalcloud.training/aws-waf-shield/](https://digitalcloud.training/aws-waf-shield/)
+
+---
+
