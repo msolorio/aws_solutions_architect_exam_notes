@@ -13,5 +13,7 @@ SAA-C02
 - multiple choice
 - multiple answer
 
-Exam information<br>
+#### Exam information
 [https://aws.amazon.com/certification/certified-solutions-architect-associate/](https://aws.amazon.com/certification/certified-solutions-architect-associate/)
+
+[Exam Notes](./exam.md)
