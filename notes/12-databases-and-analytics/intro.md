@@ -1,5 +1,36 @@
 # Databases and Analytics
 
+## Cheat Sheets
+
+#### RDS
+[https://digitalcloud.training/amazon-rds/](https://digitalcloud.training/amazon-rds/)
+
+#### Aurora
+[https://digitalcloud.training/amazon-aurora/](https://digitalcloud.training/amazon-aurora/)
+
+#### DynamoDb
+[https://digitalcloud.training/amazon-dynamodb/](https://digitalcloud.training/amazon-dynamodb/)
+
+#### ElastiCache
+[https://digitalcloud.training/amazon-elasticache/](https://digitalcloud.training/amazon-elasticache/)
+
+#### RedShift
+[https://digitalcloud.training/amazon-redshift/](https://digitalcloud.training/amazon-redshift/)
+
+#### EMR - Elastic MapReduce
+[https://digitalcloud.training/amazon-emr/](https://digitalcloud.training/amazon-emr/)
+
+#### Kinesis
+[https://digitalcloud.training/amazon-kinesis/](https://digitalcloud.training/amazon-kinesis/)
+
+#### Athena
+[https://digitalcloud.training/amazon-athena/](https://digitalcloud.training/amazon-athena/)
+
+#### AWS Glue
+[https://digitalcloud.training/aws-glue/](https://digitalcloud.training/aws-glue/)
+
+---
+
 ## Types of Databases
 
 #### Relational
@@ -1095,36 +1126,5 @@ Access
 - Create domain within a VPC
 - for sensitive data
   - use encryption in-transit and at-rest
-
----
-
-## Cheat Sheets
-
-#### RDS
-[https://digitalcloud.training/amazon-rds/](https://digitalcloud.training/amazon-rds/)
-
-#### Aurora
-[https://digitalcloud.training/amazon-aurora/](https://digitalcloud.training/amazon-aurora/)
-
-#### DynamoDb
-[https://digitalcloud.training/amazon-dynamodb/](https://digitalcloud.training/amazon-dynamodb/)
-
-#### ElastiCache
-[https://digitalcloud.training/amazon-elasticache/](https://digitalcloud.training/amazon-elasticache/)
-
-#### RedShift
-[https://digitalcloud.training/amazon-redshift/](https://digitalcloud.training/amazon-redshift/)
-
-#### EMR - Elastic MapReduce
-[https://digitalcloud.training/amazon-emr/](https://digitalcloud.training/amazon-emr/)
-
-#### Kinesis
-[https://digitalcloud.training/amazon-kinesis/](https://digitalcloud.training/amazon-kinesis/)
-
-#### Athena
-[https://digitalcloud.training/amazon-athena/](https://digitalcloud.training/amazon-athena/)
-
-#### AWS Glue
-[https://digitalcloud.training/aws-glue/](https://digitalcloud.training/aws-glue/)
 
 ---
