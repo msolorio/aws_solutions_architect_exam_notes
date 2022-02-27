@@ -1,5 +1,15 @@
 # Monitoring, Logging, and Auditing
 
+## Cheat Sheet
+
+#### CloudWatch
+[https://digitalcloud.training/amazon-cloudwatch/](https://digitalcloud.training/amazon-cloudwatch/)
+
+#### CloudTrail
+[https://digitalcloud.training/aws-cloudtrail/](https://digitalcloud.training/aws-cloudtrail/)
+
+---
+
 ## CloudWatch
 
 #### CloudWatch Uses
@@ -328,15 +338,5 @@ In Log Groups
 
 Clean up
 - terminate EC2 instance
-
----
-
-## Cheat Sheet
-
-#### CloudWatch
-[https://digitalcloud.training/amazon-cloudwatch/](https://digitalcloud.training/amazon-cloudwatch/)
-
-#### CloudTrail
-[https://digitalcloud.training/aws-cloudtrail/](https://digitalcloud.training/aws-cloudtrail/)
 
 ---

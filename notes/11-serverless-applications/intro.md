@@ -1,5 +1,22 @@
 # Serverless Applications
 
+## Cheat Sheets
+
+#### AWS Lambda
+[https://digitalcloud.training/aws-lambda/](https://digitalcloud.training/aws-lambda/)
+
+#### API Gateway
+[https://digitalcloud.training/amazon-api-gateway/](https://digitalcloud.training/amazon-api-gateway/)
+
+#### Application Integration Services
+- Many services in here
+- [https://digitalcloud.training/aws-application-integration-services/](https://digitalcloud.training/aws-application-integration-services/)
+
+#### CloudWatch
+[https://digitalcloud.training/amazon-cloudwatch/](https://digitalcloud.training/amazon-cloudwatch/)
+
+---
+
 Allows for AWS to manage any infrustructure related concerns
 - managing EC2 instances
 - updating
@@ -629,22 +646,5 @@ Actions > Delete
 
 ### Steps
 [Provided instructions in API-Gateway folder]
-
----
-
-## Cheat Sheets
-
-#### AWS Lambda
-[https://digitalcloud.training/aws-lambda/](https://digitalcloud.training/aws-lambda/)
-
-#### API Gateway
-[https://digitalcloud.training/amazon-api-gateway/](https://digitalcloud.training/amazon-api-gateway/)
-
-#### Application Integration Services
-- Many services in here
-- [https://digitalcloud.training/aws-application-integration-services/](https://digitalcloud.training/aws-application-integration-services/)
-
-#### CloudWatch
-[https://digitalcloud.training/amazon-cloudwatch/](https://digitalcloud.training/amazon-cloudwatch/)
 
 ---

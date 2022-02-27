@@ -1,5 +1,12 @@
 # Docker Containers and ECS
 
+## Cheat Sheets
+
+#### ECS and EKS Cheat Sheet
+https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/amazon-ecs/
+
+---
+
 ### Topics Covered
 - Docker
 - Elastic Container Service
@@ -417,8 +424,3 @@ Pods - groups of containers in Kubernetes
 - Web applications
 
 ---
-
-## Cheat Sheets
-
-#### ECS and EKS Cheat Sheet
-[https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/amazon-ecs/](https://digitalcloud.training/certification-training/aws-solutions-architect-associate/compute/amazon-ecs/)

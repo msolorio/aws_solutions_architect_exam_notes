@@ -1,5 +1,28 @@
 # Security in the Cloud
 
+## Cheat Sheets
+
+#### IAM
+[https://digitalcloud.training/aws-iam/](https://digitalcloud.training/aws-iam/)
+
+#### Cognito
+[https://digitalcloud.training/amazon-cognito/](https://digitalcloud.training/amazon-cognito/)
+
+#### Directory Services
+[https://digitalcloud.training/aws-directory-services/](https://digitalcloud.training/aws-directory-services/)
+
+#### KMS
+[https://digitalcloud.training/aws-kms/](https://digitalcloud.training/aws-kms/)
+
+
+#### CloudHSM
+[https://digitalcloud.training/aws-cloudhsm/](https://digitalcloud.training/aws-cloudhsm/)
+
+#### WAF and Shield
+[https://digitalcloud.training/aws-waf-shield/](https://digitalcloud.training/aws-waf-shield/)
+
+---
+
 ## AWS Directory Service
 
 - A database of user accounts and credentials
@@ -506,27 +529,3 @@ Generate KMS keys to encrypt EBS volumes for EC2 instances
   - Shield
 
 ---
-
-## Cheat Sheets
-
-#### IAM
-[https://digitalcloud.training/aws-iam/](https://digitalcloud.training/aws-iam/)
-
-#### Cognito
-[https://digitalcloud.training/amazon-cognito/](https://digitalcloud.training/amazon-cognito/)
-
-#### Directory Services
-[https://digitalcloud.training/aws-directory-services/](https://digitalcloud.training/aws-directory-services/)
-
-#### KMS
-[https://digitalcloud.training/aws-kms/](https://digitalcloud.training/aws-kms/)
-
-
-#### CloudHSM
-[https://digitalcloud.training/aws-cloudhsm/](https://digitalcloud.training/aws-cloudhsm/)
-
-#### WAF and Shield
-[https://digitalcloud.training/aws-waf-shield/](https://digitalcloud.training/aws-waf-shield/)
-
----
-

@@ -1,5 +1,27 @@
 # Deployment and Management
 
+## Cheat Sheets
+
+#### CloudFormation
+[https://digitalcloud.training/aws-cloudformation/](https://digitalcloud.training/aws-cloudformation/)
+
+#### Elastic Beanstalk
+[https://digitalcloud.training/aws-elastic-beanstalk/](https://digitalcloud.training/aws-elastic-beanstalk/)
+
+#### AWS Config
+[https://digitalcloud.training/aws-config/](https://digitalcloud.training/aws-config/)
+
+#### RAM - Resource Access Manager
+[https://digitalcloud.training/aws-resource-access-manager/](https://digitalcloud.training/aws-resource-access-manager/)
+
+#### SSM - Systems Manager
+[https://digitalcloud.training/aws-systems-manager/](https://digitalcloud.training/aws-systems-manager/)
+
+#### OpsWorks
+[https://digitalcloud.training/aws-opsworks/](https://digitalcloud.training/aws-opsworks/)
+
+---
+
 Topics covered
 - CloudFormation
 - Elastic Beanstalk
@@ -421,24 +443,3 @@ Clean up
 
 ---
 
-## Cheat Sheets
-
-#### CloudFormation
-[https://digitalcloud.training/aws-cloudformation/](https://digitalcloud.training/aws-cloudformation/)
-
-#### Elastic Beanstalk
-[https://digitalcloud.training/aws-elastic-beanstalk/](https://digitalcloud.training/aws-elastic-beanstalk/)
-
-#### AWS Config
-[https://digitalcloud.training/aws-config/](https://digitalcloud.training/aws-config/)
-
-#### RAM - Resource Access Manager
-[https://digitalcloud.training/aws-resource-access-manager/](https://digitalcloud.training/aws-resource-access-manager/)
-
-#### SSM - Systems Manager
-[https://digitalcloud.training/aws-systems-manager/](https://digitalcloud.training/aws-systems-manager/)
-
-#### OpsWorks
-[https://digitalcloud.training/aws-opsworks/](https://digitalcloud.training/aws-opsworks/)
-
----

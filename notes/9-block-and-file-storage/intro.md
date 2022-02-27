@@ -1,5 +1,15 @@
 # Block and File Storage
 
+## Cheat Sheets
+
+#### EBS Cheat Sheets
+[https://digitalcloud.training/amazon-ebs/](https://digitalcloud.training/amazon-ebs/)
+
+#### EFS Cheat Sheets
+[https://digitalcloud.training/amazon-efs/](https://digitalcloud.training/amazon-efs/)
+
+---
+
 ## Block vs File vs Object Storage
 
 ---
@@ -626,15 +636,5 @@ After Created
 
 Others are newer
   - less likely to see on exam
-
----
-
-## Cheat Sheets
-
-#### EBS Cheat Sheets
-[https://digitalcloud.training/amazon-ebs/](https://digitalcloud.training/amazon-ebs/)
-
-#### EFS Cheat Sheets
-[https://digitalcloud.training/amazon-efs/](https://digitalcloud.training/amazon-efs/)
 
 ---

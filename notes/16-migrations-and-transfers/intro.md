@@ -1,5 +1,15 @@
 # Migration and Transfers
 
+## Cheat Sheets
+
+#### Migration Services
+- Snowball
+- DMS
+- DataSync
+- [https://digitalcloud.training/aws-migration-services/](https://digitalcloud.training/aws-migration-services/)
+
+---
+
 Transfering existing resources to AWS
 
 Transfering from one AWS service to another
@@ -244,15 +254,5 @@ Optimizing transfer performance
 - use latest version of client
 - perform multiple transfer operations in parallel
 - transfer directories, instead of files
-
----
-
-## Cheat Sheets
-
-#### Migration Services
-- Snowball
-- DMS
-- DataSync
-- [https://digitalcloud.training/aws-migration-services/](https://digitalcloud.training/aws-migration-services/)
 
 ---
