@@ -174,6 +174,14 @@ Pros
 
 ---
 
+#### CloudWatch Container Insights
+- Collects and summarizes metrics and logs from ECS deployments
+- can be used with Fargate, EKS, ECS
+- https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html
+
+
+---
+
 ## Exercise - Launch Task on AWS Fargate
 
 Create a Cluster
