@@ -454,7 +454,7 @@ Can manage multiple accounts
 
 ## GaurdDuty
 
-Intelligent treat detection service
+Intelligent threat detection service
 
 - detects
   - account compromise

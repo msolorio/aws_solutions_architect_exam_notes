@@ -194,31 +194,33 @@ Metrics Collected
 
 ## AWS CloudTrail
 
-Logs data about actions occuring in AWS account
+Logs AWS API actions within an AWS account
 
-Logs all AWS API activity for auditing
+- used for auditing
 
 - Who
 - did what
 - when
 
-Retaied for 90 days
-- if need to store for more than 90 days
-  - can create CloudTrail Trail that logs events to S3
+logs retaied for 90 days by default
 
-Can trigger CloudWatch Events
-- based on API calls in CloudTrail
-- events can be streamed to CloudWatch logs
+#### CloudTrail Trail
+- Allows for storing logs for more than 90 days
+- can store logs in S3
+- Can trigger CloudWatch Events
+  - based on API calls in CloudTrail
+  - events can be also streamed to CloudWatch logs
 
 ## How it works
 - CloudTrail logs API actions to account for 90 days
 
+With CloudTrail Trail
 - Can be sent to an S3 bucket for indefinite retention
   - S3 bucket can enable **log file integrity**
     - ensures CloudTrail logs have not been tampered with
     - Logs can be used for auditing / compiance
 
-- CloudTrail can send an SNS topic for API actions
+- CloudTrail can send notification to SNS topic for API actions
 
 - CloudTrail can send logs to CloudWatch logs
   - can then trigger CloudWatch Alarms

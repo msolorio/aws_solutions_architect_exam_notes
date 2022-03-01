@@ -522,9 +522,17 @@ Provides fully managed 3rd party file systems
   - SMB protocol
   - NTFS
   - Microsoft Active Directory
+
+- **Does not integrate with S3 like Lustre** 
+
+- supports ACLs
+
 - high availability
-  - a standby backup can be created in another AZ
+  - can replicate data within AZ
+
 - multi-AZ
+  - can have active and standby in separate AZs
+
 - Can connect from on-premise data center with VPN or Direct Connect
 
 ### Lustre
