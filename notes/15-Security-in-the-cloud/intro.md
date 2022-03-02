@@ -517,6 +517,14 @@ Implementing Security at multiple layers within applicaiton
 
 #### Amazon Inspector
 - monitor EC2 instances
+- performs assessments for 
+  - network
+  - host assessments
+  - security exposure
+  - volnerabilities
+- can run on a schedule
+- agent must be installed for host and some network assessments
+- some assessments don't require agent
 
 #### KMS
 Generate KMS keys to encrypt EBS volumes for EC2 instances
