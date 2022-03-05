@@ -799,12 +799,18 @@ You need to run reporting and analytics on customer facing DB
   - **durability** - continuous backups to S3
   - Exabyte scale query capabilities
 
+## Redshift Spectrum
+- Can run SQL queries on data directly in S3
+- do not need to upload data to Redshift
+
 ---
 
 ## Elastic Map Reduce (EMR)
 
+A managed implementation of Apache Hadoop an Apache Spark
+
 #### Hadoop
-- used for perform processing on large data set
+- used for perform processing on large data sets
 
 #### EMR
 - managed implemation of Apache Hadoop or Apache Spark

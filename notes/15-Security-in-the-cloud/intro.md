@@ -31,6 +31,8 @@
 _
 - Can create directory in AWS
 - or connect existing directory
+  - from on-premise
+  - another cloud provider
 
 ---
 
@@ -85,9 +87,11 @@ Use Case
 
 ## Identify Federation
 
-Having trust relationships between multiple parties
+- Setting up trust relationships between different domains
+- For example
+  - Allow an on-premise directory to be used to authenticate, and authorize users for AWS services
 
-Can be used by on-premise clients to access AWS services
+
 
 [See Slide for explaination]
 
