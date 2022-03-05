@@ -91,7 +91,14 @@ Use Case
 - For example
   - Allow an on-premise directory to be used to authenticate, and authorize users for AWS services
 
-
+#### Steps
+- 1). client makes request to identity provider - attempts to athenticate
+- 2). identity provider checks user credentials in identity store
+- 3). if authentication successful, identity provider sends a SAML assertion
+to client
+- 4). client sends SAML assertion in request to STS service in AWS
+- 5). STS sends back temporary credentials
+- 6). Client uses temporary credentials to access the S3 bucket
 
 [See Slide for explaination]
 
