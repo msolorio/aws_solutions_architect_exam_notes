@@ -493,6 +493,7 @@ Used for creating REST / HTTP APIs or web socket APIs
 ## API Gateway Deployment types
 
 Edge-optimized endpoint
+- **default deployment type**
 - leverages the CloudFront infrastructure
 - provides clients to the API reduced latency
 
