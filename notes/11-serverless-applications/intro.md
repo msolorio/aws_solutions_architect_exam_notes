@@ -333,6 +333,21 @@ Within the **delay seconds** period the message is not seen by the consumer and 
 
 ---
 
+## Visibility Timeout
+
+The amount of time the SQS queue will give to a consumer to process a message.
+
+When message is picked up by comsumer
+- it is made invisible on the queue
+- if the consumer finishes processing the message
+  - message is removed from the queue
+- if consumer doesn't finish processing before the **visibility timeout**
+  - message is made visible and picked up by another consumer
+
+Could lead to messages being processed more than once if visibility timeout is too low
+
+---
+
 ## Short Polling
 
 Queue consumer
