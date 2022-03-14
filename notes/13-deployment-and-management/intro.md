@@ -363,6 +363,8 @@ SSM Parameter store
 Configuration management service
 - managed instances of Chef and Puppet
 
+- Allows for configuration, deployment, and management of servers in the cloud
+
 Use Cases
 - moving on-premise configuration management that is already using Chef or Puppet to AWS
 
@@ -443,3 +445,8 @@ Clean up
 
 ---
 
+## EC2 Run Command
+
+Run PowerShell Commands through the AWS console for administering changes on many EC2 instances simultaneously
+
+---

@@ -276,6 +276,7 @@ To have records processed in order
 
 #### FIFO Queue
 - Keeps first-in, first-out order
+- guarantees **exactly once processing**
 
 ---
 
@@ -345,6 +346,8 @@ When message is picked up by comsumer
   - message is made visible and picked up by another consumer
 
 Could lead to messages being processed more than once if visibility timeout is too low
+
+FIFO queue guarantees **exactly once processing**
 
 ---
 

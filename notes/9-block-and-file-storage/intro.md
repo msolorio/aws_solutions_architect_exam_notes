@@ -98,6 +98,15 @@ EBS volume must be in same AZ as EC2 instance
 - cheaper
 - much lower IOPS
 
+#### Cold HDD
+- Cheapest option
+- best for infrequently accessed data
+
+#### Throughput Optimized HDD
+- Supports high throughput usecases
+- Can save cost
+- Cheaper than Provisioned IOPS SSD
+
 ---
 
 ## EBS - Additional Notes
