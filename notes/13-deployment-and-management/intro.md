@@ -55,6 +55,8 @@ Benefits
 - can manage updates and dependancies
 - can be used to delete an entire stack
 
+The only required field in a CloudFormation template is **Resources**
+
 ---
 
 ## CloudFormation - Components
